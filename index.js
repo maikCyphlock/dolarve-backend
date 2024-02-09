@@ -10,6 +10,20 @@ const PORT = process.env.PORT || 3000;
 
 // Usa Helmet para agregar seguridad HTTP headers
 app.use(helmet());
+// Use this middleware in your Express.js app to handle CORS
+
+//TODO: REMOVE THIS, ONLY FOR TESTING A FEATURE
+app.use((req, res, next) => {
+  // Replace 'http://localhost:4321' with your actual origin
+  const allowedOrigins = ['http://localhost:4321'];
+  const origin = req.headers.origin;
+  if (allowedOrigins.includes(origin)) {
+     res.setHeader('Access-Control-Allow-Origin', origin);
+  }
+  res.setHeader('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+  next();
+});
 
 app.get("/get-all-currency", async (req, res) => {
   const data = await getAllMonitors();
