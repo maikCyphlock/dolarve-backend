@@ -27,7 +27,7 @@ jobs:
           npm run save
           git config user.name Dolar-api-bot
           git config user.email IamBot@bot.com 
-          git add -A
+          git add .
           timestamp=$(date -u)
           git commit -h "lastest date update: $timestamp" || exit 0
           git push
