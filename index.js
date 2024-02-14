@@ -16,7 +16,7 @@ app.use(helmet());
 //TODO: REMOVE THIS, ONLY FOR TESTING A FEATURE
 app.use((req, res, next) => {
   // Replace 'http://localhost:4321' with your actual origin
-  const allowedOrigins = ["http://localhost:4321"];
+  const allowedOrigins = ["https://dollar-frontend-api.vercel.app"];
   const origin = req.headers.origin;
   if (allowedOrigins.includes(origin)) {
     res.setHeader("Access-Control-Allow-Origin", origin);
