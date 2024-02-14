@@ -1,4 +1,6 @@
 name: Save Data Cron to dolar.db
+permissions:
+  contents: write
 on:
   workflow_dispatch:
 
@@ -25,7 +27,7 @@ jobs:
           npm run save
           git config user.name Dolar-api-bot
           git config user.email IamBot@bot.com 
-          git add .
-          git commit -m "[bot] Update dollar db"
-          git remote add origin https://github.com/maikCyphlock/dolarve-backend.
-          git push origin main
+          git add -A
+          timestamp=$(date -u)
+          git commit -h "lastest date update: $timestamp" || exit 0
+          git push
