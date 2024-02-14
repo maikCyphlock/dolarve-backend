@@ -16,15 +16,15 @@ jobs:
       - uses: actions/checkout@v3
       - uses: actions/setup-node@v3
         with:
-          node-version: 18
+          node-version: 20
       - uses: pnpm/action-setup@v2
         with:
-          version: 7.18.2
+          version: 8
           run_install: true
       - run: |
           npm run save
           git config user.name Dolar-api-bot
           git config user.email IamBot@bot.com 
           git add .
-          git commit -m "[bot] Update Dolar api Database"
-          git diff --quiet && git push origin master
+          git commit -m "[bot] Update dollar db"
+          git diff --staged && git push origin master
