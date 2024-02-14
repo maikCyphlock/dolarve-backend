@@ -29,5 +29,5 @@ jobs:
           git config user.email IamBot@bot.com 
           git add .
           timestamp=$(date -u)
-          git commit -h "lastest date update: $timestamp" || exit 0
+          git commit -m "lastest date update: $timestamp" || exit 0
           git push
