@@ -27,5 +27,5 @@ jobs:
           git config user.email IamBot@bot.com 
           git add .
           git commit -m "[bot] Update dollar db"
-          git remote add origin https://github.com/maikCyphlock/dolarve-backend.git
-          git diff --staged && git push origin master
+          git remote add origin https://github.com/maikCyphlock/dolarve-backend.
+          git push origin master
