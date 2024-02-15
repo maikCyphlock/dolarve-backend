@@ -21,13 +21,13 @@ getMonitor("null").then(($) => {
       price: key[1].price,
       price_old: key[1].price_old,
       type: key[1].type,
-      lastUpdate: key[1].lastUpdate,
+      lastUpdate: new Date().toISOString(),
     });
 
     insertHistory.run({
       id: key[0],
       price: key[1].price,
-      lastUpdate: key[1].lastUpdate,
+      lastUpdate: new Date().toISOString(),
     });
   });
 });
