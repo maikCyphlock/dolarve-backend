@@ -1,21 +1,28 @@
+const { createLogger, format, transports } = require('winston');
 const express = require("express");
 const helmet = require("helmet");
-const {
-  getAllMonitors,
-  getMonitorById,
-  getMonitorByUid,
-  getHistoryById,
-} = require("./queries/index.js");
+const monitorRoutes = require("./src/routes/monitorRoutes");
 const app = express();
 const PORT = process.env.PORT || 3000;
 
+// Logger
+const logger = createLogger({
+  level: process.env.LOG_LEVEL || 'info',
+  format: format.combine(
+    format.timestamp(),
+    format.colorize(),
+    format.simple()
+  ),
+  transports: [
+    new transports.Console()
+  ]
+});
+
 // Usa Helmet para agregar seguridad HTTP headers
 app.use(helmet());
-// Use this middleware in your Express.js app to handle CORS
 
-//TODO: REMOVE THIS, ONLY FOR TESTING A FEATURE
+// Middleware para manejar CORS
 app.use((req, res, next) => {
-  // Replace 'http://localhost:4321' with your actual origin
   const allowedOrigins = ["https://dollar-frontend-api.vercel.app"];
   const origin = req.headers.origin;
   if (allowedOrigins.includes(origin)) {
@@ -26,25 +33,16 @@ app.use((req, res, next) => {
   next();
 });
 
-app.get("/get-all-currency", async (req, res) => {
-  const data = await getAllMonitors();
-  res.json(data);
+// Middleware para loguear errores
+app.use((err, req, res, next) => {
+  logger.error(err.stack);
+  res.status(500).send('Algo salió mal!');
 });
 
-app.get("/get-uid-currency/:uid", async (req, res) => {
-  const data = await getMonitorByUid(req.params.uid);
-  res.json(data);
-});
-
-app.get("/get-id-currency/:id", async (req, res) => {
-  const data = await getMonitorById(req.params.id);
-  res.json(data);
-});
-app.get("/get-history-id/:id", async (req, res) => {
-  const data = await getHistoryById(req.params.id);
-  res.json(data);
-});
+// Rutas
+app.use("/api/v1/monitors", monitorRoutes);
 
 app.listen(PORT, () => {
-  console.log("Aplicación escuchando en el puerto  3000");
+  logger.info(`Aplicación escuchando en el puerto ${PORT}`);
 });
+
