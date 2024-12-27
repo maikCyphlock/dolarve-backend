@@ -37,6 +37,7 @@ class DolarDBService {
   }
 }
 
+<<<<<<< HEAD
 const dbService = new DolarDBService(db);
 
 async function updateDolarPrices() {
@@ -49,3 +50,23 @@ async function updateDolarPrices() {
 }
 
 updateDolarPrices();
+=======
+getMonitor("null").then(($) => {
+  Object.entries($).forEach((key) => {
+    update.run({
+      id: key[0],
+      title: key[1].title,
+      price: key[1].price,
+      price_old: key[1].price_old,
+      type: key[1].type,
+      lastUpdate: key[1].lastUpdate,
+    });
+
+    insertHistory.run({
+      id: key[0],
+      price: key[1].price,
+      lastUpdate: key[1].lastUpdate,
+    });
+  });
+});
+>>>>>>> parent of b655863 (♻️ refactor: change lastUpdate to new Date)
